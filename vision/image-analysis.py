@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 from azure.ai.vision.imageanalysis import ImageAnalysisClient
-from azure.ai.vision.imageanalysis.models import VisualFeatures
+from azure.ai.vision.imageanalysis.models import VisualFeatures, ImageAnalysisResult
 from azure.core.credentials import AzureKeyCredential
 
 from PIL import Image
@@ -14,7 +14,7 @@ def display_image(image_file: str):
     image = Image.open(image_file)
     image.show()
 
-def analyze_image(image_data: bytes):
+def analyze_image(image_data: bytes) -> ImageAnalysisResult:
     load_dotenv()
     ai_endpoint = os.getenv("AI_SERVICE_ENDPOINT")
     ai_key = os.getenv("AI_SERVICE_KEY")
@@ -72,6 +72,8 @@ def analyze_image(image_data: bytes):
         print("\nPeople:")
         for person in result.people.list:
             print(f"Tag: {person}  (confidence: {100 * person.confidence:.2f})")
+            
+    return result
 
 
 def main():
@@ -79,7 +81,7 @@ def main():
     image_file = f"{image_dir}/street.jpg"
     display_image(image_file)
 
-    # analyze_image(image_data=get_image_data(image_file))
+    result: ImageAnalysisResult = analyze_image(image_data=get_image_data(image_file))
 
 
 if __name__ == "__main__":
