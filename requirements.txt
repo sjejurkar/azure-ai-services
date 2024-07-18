@@ -1,4 +1,6 @@
-python-dotenv
-black
+python-dotenv==1.0.1
+black==24.4.2
+pillow==10.4.0
 azure-ai-vision-imageanalysis==1.0.0b1
-pillow
+azure-ai-documentintelligence==1.0.0b3
+pypdf2==3.0.1
